@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Clients {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  gender Gender
+  age Int
+
+  Appointment Appointment[]
+  Review Review[]
+  
+}
+
+model Provider {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  gender Gender
+  age Int
+  aboutMe String?
+  Providers ProviderService[]
+}
+
+model ProviderService {
+  id Int @id @default(autoincrement())
+  serviceName String
+  serviceDescription String
+  status ServiceStatus
+  serviceRating Float?
+  
+  idProvider Int
+  Provider Provider @relation(fields: [idProvider], references: [id])
+  Appointment Appointment[]
+  Review Review[]
+
+}
+
+model Appointment {
+  id Int @id @default(autoincrement())
+  appointmentDate DateTime
+  appointmentTime DateTime
+  status AppointmentStatus
+
+  idClient Int
+  idService Int
+
+  Clients Clients @relation(fields: [idClient], references: [id])
+  ProviderService ProviderService @relation(fields: [idService], references: [id])
+
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  rating Int
+  comment String?
+  reviewDate DateTime
+  
+  idClient Int
+  idService Int
+
+  Clients Clients @relation(fields: [idClient], references: [id])
+  ProviderService ProviderService @relation(fields: [idService], references: [id])
+
+}
+
+enum Gender {
+  male
+  female
+  other
+}
+
+enum ServiceStatus {
+  available
+  unavailable
+}
+
+enum AppointmentStatus {
+  pending
+  confirmed
+  canceled
+  completed
+}
