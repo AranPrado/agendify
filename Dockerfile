@@ -16,7 +16,7 @@ COPY . .
 
 
 # Aplica migrações do Prisma
-RUN npx prisma migrate deploy
+
 
 # Expõe a porta 3000 que a aplicação vai usar
 EXPOSE 3000
