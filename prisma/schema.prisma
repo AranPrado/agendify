@@ -13,6 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  male
+  female
+  other
+}
+
+enum ServiceStatus {
+  available
+  unavailable
+}
+
+enum AppointmentStatus {
+  pending
+  confirmed
+  canceled
+  completed
+  rejectd
+}
+
 model Clients {
   id Int @id @default(autoincrement())
   name String
@@ -20,6 +39,7 @@ model Clients {
   password String
   gender Gender
   age Int
+  accessToken String @default("")
 
   Appointment Appointment[]
   Review Review[]
@@ -33,7 +53,8 @@ model Provider {
   password String
   gender Gender
   age Int
-  aboutMe String?
+  aboutMe String
+  accessToken String @default("")
   Providers ProviderService[]
 }
 
@@ -42,7 +63,6 @@ model ProviderService {
   serviceName String
   serviceDescription String
   status ServiceStatus
-  serviceRating Float?
   
   idProvider Int
   Provider Provider @relation(fields: [idProvider], references: [id])
@@ -53,9 +73,10 @@ model ProviderService {
 
 model Appointment {
   id Int @id @default(autoincrement())
-  appointmentDate DateTime
-  appointmentTime DateTime
-  status AppointmentStatus
+  appointmentDate String
+  appointmentTime String
+  statusClient AppointmentStatus
+  statusProvider AppointmentStatus
 
   idClient Int
   idService Int
@@ -79,20 +100,3 @@ model Review {
 
 }
 
-enum Gender {
-  male
-  female
-  other
-}
-
-enum ServiceStatus {
-  available
-  unavailable
-}
-
-enum AppointmentStatus {
-  pending
-  confirmed
-  canceled
-  completed
-}
