@@ -13,9 +13,6 @@ RUN npm install
 # Copia o restante dos arquivos do projeto para o contêiner
 COPY . .
 
-# Copia o arquivo .env
-COPY .env .env
-
 # Aplica migrações do Prisma
 RUN npx prisma migrate deploy
 
