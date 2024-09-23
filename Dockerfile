@@ -13,8 +13,11 @@ RUN npm install
 # Copia o restante dos arquivos do projeto para o contêiner
 COPY . .
 
-RUN npx prisma migrate deploy
+# Copia o arquivo .env
+COPY .env .env
 
+# Aplica migrações do Prisma
+RUN npx prisma migrate deploy
 
 # Expõe a porta 3000 que a aplicação vai usar
 EXPOSE 3000
