@@ -13,7 +13,7 @@ RUN npm install
 # Copia o restante dos arquivos do projeto para o contêiner
 COPY . .
 
-COPY ./prisma ./package.json ./package-lock.json ./.npmrc /app/
+
 
 # Aplica migrações do Prisma
 RUN npx prisma migrate deploy
