@@ -11,13 +11,18 @@ services:
       - "5432:5432"                     # Mapeia a porta do contêiner para a porta local
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persistência dos dados
+    healthcheck:  # Healthcheck para garantir que o PostgreSQL está pronto
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      DATABASE_URL: "postgresql://postgres:Aran0805.@db:5432/agendify"  # String de conexão ao banco de dados
+      DATABASE_URL: "postgresql://postgres:Aran0805.@db:5432/agendify"  # URL de conexão ao banco (use 'db' no host)
     depends_on:
       - db                           # Garante que o serviço db esteja iniciado antes do app
     ports:

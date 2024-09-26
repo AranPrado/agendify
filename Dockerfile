@@ -10,16 +10,23 @@ COPY package*.json ./
 # Instala as dependências da aplicação
 RUN npm install
 
+
+
+
 # Copia o restante dos arquivos do projeto para o contêiner
 COPY . .
 
-RUN npx prisma migrate dev --name init
+
 
 # Exclui a aplicação de migrações do Prisma
-RUN npx prisma migrate deploy 
+#RUN npx prisma migrate deploy 
+# Copia o script de inicialização
+
 
 # Expõe a porta 3000 que a aplicação vai usar
 EXPOSE 3000
 
 # Comando para rodar a aplicação
 CMD ["npm", "run", "start:prod"]
+
+
