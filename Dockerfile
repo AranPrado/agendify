@@ -18,9 +18,7 @@ COPY . .
 
 
 
-# Exclui a aplicação de migrações do Prisma
-#RUN npx prisma migrate deploy 
-# Copia o script de inicialização
+
 
 
 # Expõe a porta 3000 que a aplicação vai usar
