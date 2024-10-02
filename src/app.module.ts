@@ -14,7 +14,7 @@ import { ReviewModule } from './review/review.module';
 })
 export class AppModule {
 
-  @Get('hello') // Define a rota GET /hello
+  @Get('') // Define a rota GET /hello
   getHello(): string {
     return 'Hello World!';
   }
